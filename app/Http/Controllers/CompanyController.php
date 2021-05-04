@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Http\Presenters\CompanyPresenter;
 
 class CompanyController extends Controller
 {
-    public function index()
-    {
-        //
+    public function index(
+        CompanyPresenter $companyPresenter
+    ): View {
+        $companies = Company::all();
+
+        $presenterList = $companyPresenter->presentCollection($companies);
+
+        return view('admin-panels.company.index', compact('presenterList'));
     }
 
     public function create()

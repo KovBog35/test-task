@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $email
- * @property string $logo
- * @property string $website
+ * @property null|string $logo
+ * @property null|string $website
  */
 class Company extends Model
 {
@@ -33,6 +33,11 @@ class Company extends Model
         'updated_at',
     ];
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -43,12 +48,12 @@ class Company extends Model
         return $this->email;
     }
 
-    public function getLogo(): string
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
 
-    public function getWebsite(): string
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
