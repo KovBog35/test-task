@@ -8,6 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CompanyRepository
 {
     public const DEFAULT_PER_PAGE = 10;
+
     public function save(Company $company): Company
     {
         $company->save();

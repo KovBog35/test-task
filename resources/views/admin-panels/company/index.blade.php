@@ -11,7 +11,7 @@
                         <button class="btn btn-danger m-3">Create new company</button>
                     </div>
                 </div>
-                <div class="row pl-3 pr-3 pb-3">
+                <div class=card-body">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">Company list</div>

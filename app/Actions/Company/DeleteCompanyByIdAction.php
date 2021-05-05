@@ -16,7 +16,7 @@ final class DeleteCompanyByIdAction
         $this->companyRepository = $companyRepository;
     }
 
-    public function execute(DeleteCompanyByIdRequest $request): void
+    public function execute(GetCompanyByIdRequest $request): void
     {
         $company = $this->companyRepository->getById($request->getId());
 

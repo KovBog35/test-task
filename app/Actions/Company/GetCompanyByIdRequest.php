@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Company;
 
-final class DeleteCompanyByIdRequest
+final class GetCompanyByIdRequest
 {
     private int $id;
 
