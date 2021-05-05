@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -11,9 +10,12 @@ use App\Actions\Company\GetCompanyByIdAction;
 use App\Actions\Company\GetCompanyByIdRequest;
 use App\Actions\Company\DeleteCompanyByIdAction;
 use App\Actions\Company\UpdateCompanyByIdAction;
+use App\Actions\Company\CreateCompanyByIdAction;
 use App\Actions\Company\UpdateCompanyByIdRequest;
+use App\Actions\Company\CreateCompanyByIdRequest;
 use App\Actions\Company\GetPaginatorForCompanyAction;
 use App\Actions\Company\GetPaginatorForCompanyRequest;
+use App\Http\Requests\Company\CreateCompanyValidationRequest;
 use App\Http\Requests\Company\UpdateCompanyValidationRequest;
 
 class CompanyController extends Controller
@@ -34,19 +36,24 @@ class CompanyController extends Controller
         return view('admin-panels.company.index', compact( 'paginator', 'presenterList'));
     }
 
-    public function create()
+    public function create(): View
     {
-        //
+        return view('admin-panels.company.create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(
+        CreateCompanyByIdAction $createCompanyByIdAction,
+        CreateCompanyValidationRequest $request
+    ): RedirectResponse {
+        $createCompanyByIdAction
+            ->execute(new CreateCompanyByIdRequest(
+                $request->input('name'),
+                $request->input('email'),
+                $request->file('logo'),
+                $request->input('website')
+            ));
 
-    public function show(Company $company)
-    {
-        //
+        return redirect()->route('companies.index');
     }
 
     public function edit(
@@ -73,7 +80,7 @@ class CompanyController extends Controller
                 $request->input('id'),
                 $request->input('name'),
                 $request->input('email'),
-                $request->input('logo'),
+                $request->file('logo'),
                 $request->input('website')
             ));
 

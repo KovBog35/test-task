@@ -8,7 +8,7 @@
                 <div class="card-header">Companies</div>
                 <div class="row">
                     <div class="col-4">
-                        <button class="btn btn-danger m-3">Create new company</button>
+                        <a href="{{ route('companies.create') }}" class="btn btn-danger m-3">Create new company</a>
                     </div>
                 </div>
                 <div class=card-body">
@@ -33,7 +33,9 @@
                                         <td>{{ $presenterCompany['email'] }}</td>
                                         <td>
                                             @if($presenterCompany['logo'])
-                                                <img src="{{ $presenterCompany['logo'] }}" alt="logo-{{ $presenterCompany['id']}}">
+                                                <div style="max-width: 100px; max-height: 100px">
+                                                    <img src="{{ asset('/storage/' . $presenterCompany['logo']) }}" alt="logo-{{ $presenterCompany['id']}}" class="img-fluid">
+                                                </div>
                                             @endif
                                         </td>
                                         <td><a href="{{ $presenterCompany['website'] }}">{{ $presenterCompany['website'] }}</a></td>

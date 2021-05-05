@@ -9,7 +9,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::group([],
     function () {
         Route::get('companies', [CompanyController::class, 'getPaginatorForCompanies'])->name('companies.index');
-        Route::resource('companies', CompanyController::class)->except(['index']);
+        Route::resource('companies', CompanyController::class)->except(['index', 'show']);
 });
 
 Route::prefix('/staff')->resource('staff', StaffController::class);

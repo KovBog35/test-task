@@ -21,7 +21,7 @@ final class UpdateCompanyByIdAction
 
         $company->name = $request->getName();
         $company->email = $request->getEmail();
-        $company->logo = $request->getLogo();
+        $company->logo = $request->getLogo()->store('logos', 'public');
         $company->website = $request->getWebsite();
 
         $this->companyRepository->update($company);
