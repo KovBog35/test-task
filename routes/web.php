@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\CompanyController;
@@ -18,5 +19,9 @@ Route::group([],
         Route::resource('/staff', StaffController::class)->except(['index', 'show']);
 });
 
-\Illuminate\Support\Facades\Auth::routes();
+Auth::routes([
+    'register' => false,
+    'verify' => true,
+    'reset' => false
+]);
 
