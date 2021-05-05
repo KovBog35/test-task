@@ -6,7 +6,11 @@ use App\Http\Controllers\CompanyController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('/companies')->resource('companies', CompanyController::class);
+Route::group(['prefix' => 'companies'],
+    function () {
+        Route::get('', [CompanyController::class, 'getPaginatorForCompanies'])->name('companies.index');
+        Route::resource('companies', CompanyController::class)->except(['index']);
+});
 
 Route::prefix('/staff')->resource('staff', StaffController::class);
 

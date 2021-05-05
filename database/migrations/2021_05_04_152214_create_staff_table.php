@@ -12,7 +12,7 @@ class CreateStaffTable extends Migration
             $table->bigIncrements('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->foreignId('company_id')->constrained('companies', 'id');
+            $table->foreignId('company_id')->constrained('companies', 'id')->cascadeOnDelete();
             $table->string('email');
             $table->string('phone');
             $table->timestamps();

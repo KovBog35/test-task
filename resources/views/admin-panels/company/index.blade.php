@@ -38,13 +38,18 @@
                                         </td>
                                         <td><a href="{{ $presenterCompany['website'] }}">{{ $presenterCompany['website'] }}</a></td>
                                         <td >
-                                            <a href="{{ route('companies.edit') }}" class="btn btn-primary btn-block">Edit</a>
-                                            <a href="{{ route('companies.delete') }}" class="btn btn-danger btn-block">Delete</a>
+                                            <a href="{{ route('companies.edit', $presenterCompany['id']) }}" class="btn btn-primary btn-block">Edit</a>
+                                            <form action="{{ route('companies.destroy', $presenterCompany['id']) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-block mt-1" type="submit">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
+                                {{ $paginator->links() }}
                             </div>
                         </div>
                     </div>

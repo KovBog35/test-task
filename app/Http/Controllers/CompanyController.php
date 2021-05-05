@@ -2,21 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Company\DeleteCompanyByIdAction;
+use App\Actions\Company\DeleteCompanyByIdRequest;
 use App\Models\Company;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Presenters\CompanyPresenter;
+use App\Actions\Company\GetPaginatorForCompanyAction;
+use App\Actions\Company\GetPaginatorForCompanyRequest;
 
 class CompanyController extends Controller
 {
-    public function index(
-        CompanyPresenter $companyPresenter
+    public function getPaginatorForCompanies(
+        GetPaginatorForCompanyAction $getAllCompanyAction,
+        CompanyPresenter $companyPresenter,
+        Request $request
     ): View {
-        $companies = Company::all();
+        $paginator = $getAllCompanyAction
+            ->execute(new GetPaginatorForCompanyRequest(
+                (int) $request->input('page')
+            ))
+            ->getResponse();
 
-        $presenterList = $companyPresenter->presentCollection($companies);
+        $presenterList = $companyPresenter->presentCollection($paginator);
 
-        return view('admin-panels.company.index', compact('presenterList'));
+        return view('admin-panels.company.index', compact( 'paginator', 'presenterList'));
     }
 
     public function create()
@@ -44,8 +55,13 @@ class CompanyController extends Controller
         //
     }
 
-    public function destroy(Company $company)
-    {
-        //
+    public function destroy(
+        DeleteCompanyByIdAction $deleteCompanyByIdAction,
+        string $companyId
+    ): RedirectResponse {
+        $deleteCompanyByIdAction
+            ->execute(new DeleteCompanyByIdRequest((int) $companyId));
+
+        return redirect()->route('companies.index');
     }
 }
