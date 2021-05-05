@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Staff\CreateStaffByIdRequest;
-use App\Http\Requests\Staff\CreateStaffValidationRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Presenters\StaffPresenter;
+use App\Actions\Staff\GetStaffByIdAction;
+use App\Actions\Staff\GetStaffByIdRequest;
 use App\Actions\Staff\CreateStaffByIdAction;
+use App\Actions\Staff\DeleteStaffByIdAction;
+use App\Actions\Staff\UpdateStaffByIdAction;
+use App\Actions\Staff\CreateStaffByIdRequest;
+use App\Actions\Staff\UpdateStaffByIdRequest;
 use App\Actions\Staff\GetPaginatorForStaffAction;
 use App\Actions\Staff\GetPaginatorForStaffRequest;
+use App\Http\Requests\Staff\CreateStaffValidationRequest;
+use App\Http\Requests\Staff\UpdateStaffValidationRequest;
 
 class StaffController extends Controller
 {
@@ -62,33 +68,34 @@ class StaffController extends Controller
 
         $presenter = $staffPresenter->present($staff);
 
-        return view('admin-panels.company.edit', compact('presenter'));
+        return view('admin-panels.staff.edit', compact('presenter'));
     }
 
     public function update(
-        UpdateCompanyByIdAction $updateCompanyByIdAction,
-        UpdateCompanyValidationRequest $request,
-        string $companyId
+        UpdateStaffByIdAction $updateStaffByIdAction,
+        UpdateStaffValidationRequest $request,
+        string $staffId
     ): RedirectResponse {
-        $updateCompanyByIdAction
-            ->execute(new UpdateCompanyByIdRequest(
+        $updateStaffByIdAction
+            ->execute(new UpdateStaffByIdRequest(
                 $request->input('id'),
-                $request->input('name'),
+                $request->input('first-name'),
+                $request->input('last-name'),
+                $request->input('company-name'),
                 $request->input('email'),
-                $request->file('logo'),
-                $request->input('website')
+                $request->input('phone')
             ));
 
-        return redirect()->route('companies.edit', $companyId);
+        return redirect()->route('staff.edit', $staffId);
     }
 
     public function destroy(
-        DeleteCompanyByIdAction $deleteCompanyByIdAction,
-        string $companyId
+        DeleteStaffByIdAction $deleteStaffByIdAction,
+        string $staffId
     ): RedirectResponse {
-        $deleteCompanyByIdAction
-            ->execute(new GetCompanyByIdRequest((int) $companyId));
+        $deleteStaffByIdAction
+            ->execute(new GetStaffByIdRequest((int) $staffId));
 
-        return redirect()->route('companies.index');
+        return redirect()->route('staff.index');
     }
 }
