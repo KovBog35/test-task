@@ -8,7 +8,7 @@
                     <div class="card-header">Staff</div>
                     <div class="row">
                         <div class="col-4">
-                            <button class="btn btn-danger m-3">Create new staff</button>
+                            <a href="{{ route('staff.create') }}" class="btn btn-danger m-3">Create new staff</a>
                         </div>
                     </div>
                     <div class="row pl-3 pr-3 pb-3">
@@ -28,19 +28,26 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>First name</td>
-                                            <td>Last name</td>
-                                            <td>Company</td>
-                                            <td>Email</td>
-                                            <td>Phone</td>
-                                            <td >
-                                                <button class="btn btn-primary">Edit</button>
-                                                <button class="btn btn-danger">Delete</button>
-                                            </td>
-                                        </tr>
+                                        @foreach($presenterList as $presenterStaff)
+                                            <tr>
+                                                <td>{{ $presenterStaff['firstName'] }}</td>
+                                                <td>{{ $presenterStaff['lastName'] }}</td>
+                                                <td>{{ $presenterStaff['company']['name'] }}</td>
+                                                <td>{{ $presenterStaff['email'] }}</td>
+                                                <td>{{ $presenterStaff['phone'] }}</td>
+                                                <td >
+                                                    <a href="{{ route('staff.edit', $presenterStaff['id']) }}" class="btn btn-primary btn-block">Edit</a>
+                                                    <form action="{{ route('staff.destroy', $presenterStaff['id']) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button class="btn btn-danger btn-block mt-1" type="submit">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
+                                    {{ $paginator->links() }}
                                 </div>
                             </div>
                         </div>

@@ -9,7 +9,6 @@
                 <div class="card-body">
                     <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="id">
                         <div class="mb-3">
                             <label for="company-name" class="form-label">Name</label>
                             <input name="name" type="text" class="form-control" id="company-name">

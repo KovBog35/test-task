@@ -33,6 +33,11 @@ class CompanyRepository
         return Company::firstWhere('id', $companyId);
     }
 
+    public function getByName(string $companyName): ?Company
+    {
+        return Company::firstWhere('name', $companyName);
+    }
+
     public function getCompaniesPaginator(int $page): LengthAwarePaginator
     {
         return Company::query()->paginate(self::DEFAULT_PER_PAGE, ['*'], 'page', $page);

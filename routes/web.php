@@ -8,11 +8,15 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::group([],
     function () {
-        Route::get('companies', [CompanyController::class, 'getPaginatorForCompanies'])->name('companies.index');
-        Route::resource('companies', CompanyController::class)->except(['index', 'show']);
+        Route::get('/companies', [CompanyController::class, 'getPaginatorForCompanies'])->name('companies.index');
+        Route::resource('/companies', CompanyController::class)->except(['index', 'show']);
 });
 
-Route::prefix('/staff')->resource('staff', StaffController::class);
+Route::group([],
+    function () {
+        Route::get('/staff', [StaffController::class, 'getPaginatorForStaff'])->name('staff.index');
+        Route::resource('/staff', StaffController::class)->except(['index', 'show']);
+});
 
 \Illuminate\Support\Facades\Auth::routes();
 
