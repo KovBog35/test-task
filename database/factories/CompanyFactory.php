@@ -14,7 +14,6 @@ class CompanyFactory extends Factory
         return [
             'name' => $this->faker->company,
             'email' => $this->faker->companyEmail,
-            'logo' => rand(0,1) ? $this->faker->imageUrl(100,100) : null,
             'website' => rand(0,1) ? $this->faker->domainName : null,
         ];
     }
